@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vakalat.AI - Lawyers</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='lawyers.css') }}"> <!-- External CSS file -->
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Vakalat.AI</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/buy_documents.html">Buy Documents</a></li>
+                <li><a href="/lawyers">Hire/Join Lawyer Crew</a></li>
+                <li><a href="/lawgpt">LawGPT</a></li>
+                <li><a href="#">Talk2Doc</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="search-bar">
+        <form action="/lawyers" method="GET">
+            <input id="searchInput" type="text" name="query" placeholder="Search for a lawyer...">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <div id="lawyerCards" class="lawyer-cards">
+        {% if lawyers %}
+            {% for lawyer in lawyers %}
+                <div class="card">
+                    <img src="{{ lawyer['image_path'] }}" alt="{{ lawyer['name'] }}">
+                    <h2>{{ lawyer['name'] }}</h2>
+                    <!-- <p>{{ lawyer['description'] }}</p> -->
+                    <button class="hireBtn" data-id="{{ lawyer['id'] }}">Hire</button>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No recommended lawyers found.</p>
+        {% endif %}
+    </div>
+    
+    <button id="joinBtn">Join as a Lawyer</button>
+
+    <!-- Popup Form -->
+    <div id="popupForm" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Join as a Lawyer</h2>
+            <form id="lawyerForm" enctype="multipart/form-data" action="/join" method="POST">
+                <input type="file" name="photo" accept="image/*" required>
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="text" name="description" placeholder="Description" required>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Message -->
+    <div id="successMessage" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Success!</h2>
+            <p>You have successfully joined as a lawyer.</p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='lawyers.js') }}"></script> <!-- JavaScript file -->
+</body>
+</html>

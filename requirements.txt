@@ -1,0 +1,8 @@
+Flask
+numpy
+pandas
+ctransformers==0.2.5          #necessary for langchain and llama
+sentence-transformers==2.2.2  #for embedding model
+langchain==0.0.225
+pypdf
+faiss-cpu
